@@ -3,12 +3,18 @@ import './App.css';
 import 'tailwindcss/tailwind.css';
 import { useEffect, useState } from 'react';
 import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import JSONInput from 'react-json-editor-ajrm';
+import locale from 'react-json-editor-ajrm/locale/en';
 import Message from '../class/Message';
 
 const Hello = () => {
   const [connectionNum, setConnectionNum] = useState(0);
   const [history, setHistory] = useState('');
-  const [message, setMessage] = useState('');
+  const [jsObject, setJsObject] = useState({
+    userID: 'nancy_mccarty',
+    userName: "Nancy's McCarty",
+    id: 'A1',
+  });
   const [selectState, setSelectState] = useState<Array<boolean>>(
     new Array<boolean>(0)
   );
@@ -78,16 +84,20 @@ const Hello = () => {
           </div>
           <div className="m-auto flex h-16">
             Send Message Content:
-            <input
-              className="m-auto text-black"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+            {/* <Editor value={message} onChange={setMessage} /> */}
+            <JSONInput
+              id="a_unique_id"
+              placeholder={jsObject}
+              height="200px"
+              onChange={(e) => {
+                setJsObject(e.jsObject);
+              }}
             />
             <Button
               className="m-auto "
               variant="contained"
               onClick={() => {
-                sentMessage(message);
+                sentMessage(JSON.stringify(jsObject));
               }}
             >
               sent message
