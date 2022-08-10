@@ -25,12 +25,15 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+const wss = new WebSocketServer({ port: 8080 });
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
 });
+
+
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -112,14 +115,15 @@ const createWindow = async () => {
   // eslint-disable-next-line
   new AppUpdater();
 
-  const wss = new WebSocketServer({ port: 8080 });
   wss.on('connection', function connection(ws) {
     mainWindow?.webContents.send('connection');
     ws.on('message', function message(data) {
-      console.log('received: %s', data);
+      mainWindow?.webContents.send('received-message', data.toString());
     });
 
-    ws.send('something');
+    ipcMain.on('sent-message', async (_event, arg) => {
+      ws.send(arg);
+    });
   });
   wss.on('close', function close() {
     console.log('断开连接'); // todo this is a but. when websocket close, it didn't trigger.
