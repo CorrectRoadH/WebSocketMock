@@ -190,8 +190,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "WebSocketMock",
+    "appId": "org.erb.WebSocketMock",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
