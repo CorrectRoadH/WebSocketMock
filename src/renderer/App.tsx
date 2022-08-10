@@ -1,5 +1,6 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import 'tailwindcss/tailwind.css';
 import { useEffect, useState } from 'react';
 import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import Message from '../class/Message';
@@ -44,7 +45,7 @@ const Hello = () => {
   return (
     <div>
       <div>
-        <div>
+        <div className="text-white">
           已连接Socket客户端:
           <FormGroup>
             {Array.from(Array(connectionNum), (_e, i) => {
@@ -67,7 +68,11 @@ const Hello = () => {
             })}
           </FormGroup>
           <div>
-            <textarea value={history} onChange={() => {}} style={{resize: 'none'}} />
+            <textarea
+              value={history}
+              onChange={() => {}}
+              style={{ resize: 'none' }}
+            />
           </div>
           <input value={message} onChange={(e) => setMessage(e.target.value)} />
           <Button
