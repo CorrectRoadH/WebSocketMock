@@ -1,35 +1,34 @@
 {
-  "description": "A foundation for scalable desktop apps",
+  "description": "a nice applicant to imtate a websocket\\socket.io Server with a friendly GUI and powerful function\n\n",
   "keywords": [
     "electron",
-    "boilerplate",
+    "websocket",
     "react",
     "typescript",
     "ts",
     "sass",
     "webpack",
-    "hot",
-    "reload"
+    "mock"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/CorrectRoadH/WebSocketMock",
   "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
+    "url": "https://github.com/CorrectRoadH/WebSocketMock/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+git@github.com:CorrectRoadH/WebSocketMock.git"
   },
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
+    "name": "CorrectRoadH",
+    "email": "a778917369@gmail.com",
+    "url": "https://github.com/CorrectRoadH"
   },
   "contributors": [
     {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
+      "name": "NULL",
+      "email": "NULL",
+      "url": "NULL"
     }
   ],
   "main": "./src/main/main.ts",
