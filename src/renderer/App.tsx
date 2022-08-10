@@ -15,11 +15,11 @@ const Hello = () => {
   useEffect(() => {
     window.electron.ipcRenderer.on('connection', () => {
       setConnectionNum(connectionNum + 1);
-      setSelectState(new Array<boolean>(connectionNum + 1).fill(true));
+      setSelectState(new Array<boolean>(connectionNum + 1).fill(false));
     });
     window.electron.ipcRenderer.on('disconnection', () => {
       setConnectionNum(connectionNum - 1);
-      setSelectState(new Array<boolean>(connectionNum - 1).fill(true));
+      setSelectState(new Array<boolean>(connectionNum - 1).fill(false));
     });
 
     window.electron.ipcRenderer.on('received-message', (data) => {
@@ -43,8 +43,8 @@ const Hello = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="flex flex-col	w-screen">
+      <div className="m-auto flex flex-col">
         <div className="text-white">
           已连接Socket客户端:
           <FormGroup>
@@ -59,6 +59,7 @@ const Hello = () => {
                         const newArray = selectState;
                         newArray[i] = !newArray[i];
                         setSelectState(newArray);
+                        console.log(newArray);
                       }}
                     />
                   }
@@ -67,22 +68,30 @@ const Hello = () => {
               );
             })}
           </FormGroup>
-          <div>
+          <div className="w-screen flex">
             <textarea
+              className="w-9/12 h-96 m-auto text-black"
               value={history}
               onChange={() => {}}
               style={{ resize: 'none' }}
             />
           </div>
-          <input value={message} onChange={(e) => setMessage(e.target.value)} />
-          <Button
-            variant="contained"
-            onClick={() => {
-              sentMessage(message);
-            }}
-          >
-            sent message
-          </Button>
+          <div className="m-auto flex h-16">
+            Send Message Content:
+            <input
+              className="m-auto text-black"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <Button className="m-auto "
+              variant="contained"
+              onClick={() => {
+                sentMessage(message);
+              }}
+            >
+              sent message
+            </Button>
+          </div>
         </div>
       </div>
       <div>ConnectionNum:{connectionNum}</div>
