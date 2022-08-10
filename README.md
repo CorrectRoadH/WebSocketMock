@@ -7,3 +7,10 @@ Although I just to code it now, But I believe it will be a powerful tool soon.
 -[ ] connect multiple websocket\socket.io Client and send message to any one or all.
 
 -[ ] Script Tool, can code quickly a simple and powerful script to response difference socket requests.
+
+# ScreenShot
+
+Although the applicant is simple and ugly, But I will make it good at later.
+
+![](pictures/img.png)
+
