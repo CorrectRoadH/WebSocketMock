@@ -5,5 +5,5 @@ Although I just to code it now, But I believe it will be a powerful tool soon.
 
 # To do: 
 -[ ] connect multiple websocket\socket.io Client and send message to any one or all.
--[ ] Script Tool, can code quickly a simple and powerful script to response difference socket requests.
 
+-[ ] Script Tool, can code quickly a simple and powerful script to response difference socket requests.
