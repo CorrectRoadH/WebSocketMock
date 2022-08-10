@@ -114,11 +114,16 @@ const createWindow = async () => {
 
   const wss = new WebSocketServer({ port: 8080 });
   wss.on('connection', function connection(ws) {
+    mainWindow?.webContents.send('connection');
     ws.on('message', function message(data) {
       console.log('received: %s', data);
     });
 
     ws.send('something');
+  });
+  wss.on('close', function close() {
+    console.log('断开连接'); // todo this is a but. when websocket close, it didn't trigger.
+    mainWindow?.webContents.send('disconnection');
   });
 };
 
