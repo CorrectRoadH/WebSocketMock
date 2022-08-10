@@ -249,8 +249,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "CorrectRoadH",
+      "repo": "WebSocketMock"
     }
   },
   "collective": {
