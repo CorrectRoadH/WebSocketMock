@@ -83,7 +83,8 @@ const Hello = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <Button className="m-auto "
+            <Button
+              className="m-auto "
               variant="contained"
               onClick={() => {
                 sentMessage(message);

@@ -36,9 +36,9 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('sent-message', async (_event, arg: Message) => {
-  arg.receiver.forEach((value: number) =>
-    websocketClients[value].send(arg.msg)
-  );
+  arg.receiver.forEach((value: number) => {
+    websocketClients[value].send(arg.msg);
+  });
 });
 
 if (process.env.NODE_ENV === 'production') {
