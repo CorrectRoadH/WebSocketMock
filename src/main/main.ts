@@ -12,9 +12,9 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import { WebSocketServer } from 'ws';
+import { WebSocket, WebSocketServer} from 'ws';
 import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
+import {resolveHtmlPath} from './util';
 
 class AppUpdater {
   constructor() {
@@ -25,7 +25,8 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-const wss = new WebSocketServer({ port: 8080 });
+const wss = new WebSocketServer({port: 8080});
+const websocketClients: WebSocket[] = [];
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -33,7 +34,12 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-
+ipcMain.on('sent-message', async (_event, arg) => {
+  console.log(arg);
+  arg.receiver.forEach((value: string) =>
+    websocketClients[value].send(arg.msg)
+  );
+});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -121,9 +127,7 @@ const createWindow = async () => {
       mainWindow?.webContents.send('received-message', data.toString());
     });
 
-    ipcMain.on('sent-message', async (_event, arg) => {
-      ws.send(arg);
-    });
+    websocketClients.push(ws);
   });
   wss.on('close', function close() {
     console.log('断开连接'); // todo this is a but. when websocket close, it didn't trigger.
