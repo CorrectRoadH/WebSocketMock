@@ -45,6 +45,7 @@ const Hello = () => {
     <div>
       <div>
         <div>
+          已连接Socket客户端:
           <FormGroup>
             {Array.from(Array(connectionNum), (_e, i) => {
               return (
@@ -65,7 +66,9 @@ const Hello = () => {
               );
             })}
           </FormGroup>
-          <div>{history}</div>
+          <div>
+            <textarea value={history} onChange={() => {}} style={{resize: 'none'}} />
+          </div>
           <input value={message} onChange={(e) => setMessage(e.target.value)} />
           <Button
             variant="contained"
