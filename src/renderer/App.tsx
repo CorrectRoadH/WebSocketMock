@@ -2,7 +2,13 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'tailwindcss/tailwind.css';
 import { useEffect, useState } from 'react';
-import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import {
+  Button,
+  ButtonGroup,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+} from '@mui/material';
 import JSONInput from 'react-json-editor-ajrm';
 import Message from '../class/Message';
 import Dict = NodeJS.Dict;
@@ -67,8 +73,20 @@ const Hello = () => {
 
   return (
     <div className="grid grid-rows-6 w-screen h-screen">
-      <div className="border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 ">
-        This is a Setting Area
+      <div className="flex flex-row  border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 ">
+        <div className="m-auto">
+          Mode:
+          <ButtonGroup
+            variant="contained"
+            aria-label="outlined primary button group"
+          >
+            <Button>WebSocket</Button>
+            <Button>SocketIO</Button>
+          </ButtonGroup>
+        </div>
+        <div className="m-auto">
+          Listen Port:4778 <Button variant="contained">Change</Button>
+        </div>
       </div>
       <div className="grid grid-cols-6 row-start-2 row-end-6">
         <div className="border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 text-white">
