@@ -4,41 +4,52 @@ import 'tailwindcss/tailwind.css';
 import { useEffect, useState } from 'react';
 import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import JSONInput from 'react-json-editor-ajrm';
-import locale from 'react-json-editor-ajrm/locale/en';
 import Message from '../class/Message';
+import Dict = NodeJS.Dict;
 
 const Hello = () => {
   const [connectionNum, setConnectionNum] = useState(0);
   const [history, setHistory] = useState('');
   const [jsObject, setJsObject] = useState({
-    userID: 'nancy_mccarty',
-    userName: "Nancy's McCarty",
-    id: 'A1',
+    msg: 'Hello World',
   });
-  const [selectState, setSelectState] = useState<Array<boolean>>(
-    new Array<boolean>(0)
-  );
+
+  const [selectState, setSelectState] = useState<Dict<boolean>>({});
+
   useEffect(() => {
-    window.electron.ipcRenderer.on('connection', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.electron.ipcRenderer.on('connection', (id: string) => {
+      // when new connection join
+      const tempSelectState: Dict<boolean> = selectState;
+      tempSelectState[id] = false;
+      setSelectState(tempSelectState);
+
       setConnectionNum(connectionNum + 1);
-      setSelectState(new Array<boolean>(connectionNum + 1).fill(false));
     });
-    window.electron.ipcRenderer.on('disconnection', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.electron.ipcRenderer.on('disconnection', (id: string) => {
+      const tempSelectState: Dict<boolean> = selectState;
+      delete tempSelectState[id];
+      setSelectState(tempSelectState);
+
       setConnectionNum(connectionNum - 1);
-      setSelectState(new Array<boolean>(connectionNum - 1).fill(false));
     });
 
     window.electron.ipcRenderer.on('received-message', (data) => {
       setHistory(`${history}\n client:${data}`);
     });
-  }, [connectionNum, history]);
+  }, [connectionNum, history, selectState]);
   const sentMessage = (msg: any) => {
     setHistory(`${history}\n me:${msg}`);
 
-    const receiver = new Array(0);
-    for (let i = 0; i < selectState.length; i += 1) {
-      if (selectState[i]) {
-        receiver.push(i);
+    const receiver = new Array<string>(0);
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(selectState)) {
+      if (value) {
+        receiver.push(key);
       }
     }
 
@@ -54,22 +65,21 @@ const Hello = () => {
         <div className="text-white">
           已连接Socket客户端:
           <FormGroup>
-            {Array.from(Array(connectionNum), (_e, i) => {
+            {Object.entries(selectState).map(([key, value]) => {
               return (
                 <FormControlLabel
-                  key={i}
+                  key={key}
                   control={
                     <Checkbox
-                      value={selectState[i]}
+                      value={value}
                       onClick={() => {
-                        const newArray = selectState;
-                        newArray[i] = !newArray[i];
-                        setSelectState(newArray);
-                        console.log(newArray);
+                        const tempSelectState: Dict<boolean> = selectState;
+                        tempSelectState[key] = !tempSelectState[key];
+                        setSelectState(tempSelectState);
                       }}
                     />
                   }
-                  label={`socketClient${i}`}
+                  label={key}
                 />
               );
             })}
@@ -89,7 +99,7 @@ const Hello = () => {
               id="a_unique_id"
               placeholder={jsObject}
               height="200px"
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setJsObject(e.jsObject);
               }}
             />

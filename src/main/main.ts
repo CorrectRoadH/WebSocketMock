@@ -30,7 +30,6 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 const wss = new WebSocketServer({ port: 4778 });
-const websocketClients: WebSocket[] = [];
 const websocketClientStore: Dict<SocketClientMain> = {};
 
 ipcMain.on('ipc-example', async (event, arg) => {
@@ -40,8 +39,8 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('sent-message', async (_event, arg: Message) => {
-  arg.receiver.forEach((value: number) => {
-    websocketClients[value].send(arg.msg);
+  arg.receiver.forEach((value: string) => {
+    websocketClientStore[value]?.ws.send(arg.msg);
   });
 });
 
@@ -125,14 +124,13 @@ const createWindow = async () => {
   new AppUpdater();
 
   wss.on('connection', function connection(ws) {
-    mainWindow?.webContents.send('connection');
+    const tempWs: SocketClientMain = { id: generateID(), ws };
+    websocketClientStore[tempWs.id] = tempWs;
+
+    mainWindow?.webContents.send('connection', tempWs.id);
     ws.on('message', function message(data) {
       mainWindow?.webContents.send('received-message', data.toString());
     });
-
-    const tempWs: SocketClientMain = { id: generateID(), ws };
-    websocketClientStore[tempWs.id] = tempWs;
-    console.log(websocketClientStore);
   });
   wss.on('close', function close() {
     console.log('断开连接'); // todo this is a but. when websocket close, it didn't trigger.

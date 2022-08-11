@@ -1,4 +1,4 @@
 export default interface Message {
-  receiver: Array<number>;
+  receiver: Array<string>;
   msg: any;
 }
