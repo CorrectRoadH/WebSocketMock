@@ -16,6 +16,9 @@ import { WebSocket, WebSocketServer } from 'ws';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import Message from '../class/Message';
+import Dict = NodeJS.Dict;
+import SocketClientMain from '../class/SocketClientMain';
+import generateID from '../renderer/utilities/generateID';
 
 class AppUpdater {
   constructor() {
@@ -26,8 +29,9 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-const wss = new WebSocketServer({ port: 8080 });
+const wss = new WebSocketServer({ port: 4778 });
 const websocketClients: WebSocket[] = [];
+const websocketClientStore: Dict<SocketClientMain> = {};
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -126,7 +130,9 @@ const createWindow = async () => {
       mainWindow?.webContents.send('received-message', data.toString());
     });
 
-    websocketClients.push(ws);
+    const tempWs: SocketClientMain = { id: generateID(), ws };
+    websocketClientStore[tempWs.id] = tempWs;
+    console.log(websocketClientStore);
   });
   wss.on('close', function close() {
     console.log('断开连接'); // todo this is a but. when websocket close, it didn't trigger.
