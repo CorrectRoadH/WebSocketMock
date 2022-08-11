@@ -1,6 +1,6 @@
 {
   "name": "WebSocketMock",
-  "version": "0.0.3",
+  "version": "0.3.0",
   "description": "a nice applicant to imtate a websocket\\socket.io Server with a friendly GUI and powerful function",
   "license": "MIT",
   "author": {
