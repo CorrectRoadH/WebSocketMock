@@ -134,6 +134,7 @@ const createWindow = async () => {
   });
   wss.on('close', function close() {
     console.log('断开连接'); // todo this is a but. when websocket close, it didn't trigger.
+    // todo now can't delete uuid of render
     mainWindow?.webContents.send('disconnection');
   });
 };
