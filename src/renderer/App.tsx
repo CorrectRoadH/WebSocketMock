@@ -73,7 +73,7 @@ const Hello = () => {
 
   return (
     <div className="grid grid-rows-6 w-screen h-screen">
-      <div className="flex flex-row  border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 ">
+      <div className="flex flex-row  border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 hover:hover:shadow-lg shadow-indigo-500/50">
         <div className="m-auto">
           Mode:
           <ButtonGroup
@@ -89,7 +89,7 @@ const Hello = () => {
         </div>
       </div>
       <div className="grid grid-cols-6 row-start-2 row-end-6">
-        <div className="border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 text-white">
+        <div className="border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 text-white hover:shadow-lg shadow-indigo-500/50">
           <div>
             已连接Socket客户端:
             <FormGroup>
@@ -115,7 +115,7 @@ const Hello = () => {
           </div>
         </div>
 
-        <div className="flex border-solid m-1 border-4 rounded-lg border-sky-500 col-start-2 col-end-5 bg-sky-500">
+        <div className="flex border-solid m-1 border-4 rounded-lg border-sky-500 col-start-2 col-end-5 bg-sky-500 hover:shadow-lg shadow-indigo-500/50">
           <textarea
             className="w-11/12 h-96  m-auto text-black"
             value={history}
@@ -123,7 +123,7 @@ const Hello = () => {
             style={{ resize: 'none' }}
           />
         </div>
-        <div className="border-solid m-1 border-4 rounded-lg border-sky-500 col-start-5 col-end-7 bg-sky-500">
+        <div className="border-solid m-1 border-4 rounded-lg border-sky-500 col-start-5 col-end-7 bg-sky-500 hover:shadow-lg shadow-indigo-500/50">
           Send Message Content:
           {/* <Editor value={message} onChange={setMessage} /> */}
           <JSONInput
