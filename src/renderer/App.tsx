@@ -129,7 +129,7 @@ const Hello = () => {
           <JSONInput
             id="a_unique_id"
             placeholder={jsObject}
-            height="200px"
+            height="400px"
             onChange={(e: any) => {
               setJsObject(e.jsObject);
             }}
