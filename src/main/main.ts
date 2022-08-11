@@ -10,9 +10,9 @@
  */
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
-import { WebSocket, WebSocketServer } from 'ws';
+// import { autoUpdater } from 'electron-updater';
+// import log from 'electron-log';
+import { WebSocketServer } from 'ws';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import Message from '../class/Message';
@@ -21,13 +21,13 @@ import SocketClientMain from '../class/SocketClientMain';
 import generateID from '../renderer/utilities/generateID';
 import RecevieMessage from '../class/RecevieMessage';
 
-class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
+// class AppUpdater {
+//   constructor() {
+//     log.transports.file.level = 'info';
+//     autoUpdater.logger = log;
+//     autoUpdater.checkForUpdatesAndNotify();
+//   }
+// }
 
 let mainWindow: BrowserWindow | null = null;
 const wss = new WebSocketServer({ port: 4778 });
@@ -122,7 +122,7 @@ const createWindow = async () => {
   });
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
-  new AppUpdater();
+  // new AppUpdater();
 
   wss.on('connection', function connection(ws) {
     const tempWs: SocketClientMain = { id: generateID(), ws };
