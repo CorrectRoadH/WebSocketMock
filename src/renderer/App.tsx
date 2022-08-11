@@ -91,7 +91,7 @@ const Hello = () => {
       <div className="grid grid-cols-6 row-start-2 row-end-6">
         <div className="border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 text-white hover:shadow-lg shadow-indigo-500/50">
           <div>
-            已连接Socket客户端:
+            WS Client List:
             <FormGroup>
               {Object.entries(selectState).map(([key, value]) => {
                 return (
