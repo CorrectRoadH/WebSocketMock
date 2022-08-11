@@ -14,3 +14,9 @@ Although the applicant is simple and ugly, But I will make it good at later.
 
 ![](pictures/img.png)
 
+# Installation
+linux,mac,windows: https://github.com/CorrectRoadH/WebSocketMock/releases
+
+# Usage
+ws://localhost:4778
+![](pictures/usage.png)
