@@ -19,6 +19,7 @@ import Message from '../class/Message';
 import Dict = NodeJS.Dict;
 import SocketClientMain from '../class/SocketClientMain';
 import generateID from '../renderer/utilities/generateID';
+import RecevieMessage from '../class/RecevieMessage';
 
 class AppUpdater {
   constructor() {
@@ -129,12 +130,15 @@ const createWindow = async () => {
 
     mainWindow?.webContents.send('connection', tempWs.id);
     ws.on('message', function message(data) {
-      mainWindow?.webContents.send('received-message', data.toString());
+      mainWindow?.webContents.send('received-message', {
+        sentID: tempWs.id,
+        msg: data.toString(),
+      } as RecevieMessage);
     });
   });
   wss.on('close', function close() {
     console.log('断开连接'); // todo this is a but. when websocket close, it didn't trigger.
-    // todo now can't delete uuid of render
+    // todo now can't delete uuid of render. may it can move up. in that can read uuid.
     mainWindow?.webContents.send('disconnection');
   });
 };

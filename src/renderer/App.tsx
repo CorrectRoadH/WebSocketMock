@@ -6,6 +6,7 @@ import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import JSONInput from 'react-json-editor-ajrm';
 import Message from '../class/Message';
 import Dict = NodeJS.Dict;
+import RecevieMessage from '../class/RecevieMessage';
 
 const Hello = () => {
   const [connectionNum, setConnectionNum] = useState(0);
@@ -37,13 +38,16 @@ const Hello = () => {
       setConnectionNum(connectionNum - 1);
     });
 
-    window.electron.ipcRenderer.on('received-message', (data) => {
-      setHistory(`${history}\n client:${data}`);
-    });
+    window.electron.ipcRenderer.on(
+      'received-message',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      (data: RecevieMessage) => {
+        setHistory(`${history}\n client(${data.sentID}):${data.msg}`);
+      }
+    );
   }, [connectionNum, history, selectState]);
   const sentMessage = (msg: any) => {
-    setHistory(`${history}\n me:${msg}`);
-
     const receiver = new Array<string>(0);
 
     // eslint-disable-next-line no-restricted-syntax
@@ -52,6 +56,8 @@ const Hello = () => {
         receiver.push(key);
       }
     }
+
+    setHistory(`${history}\n me to(${receiver.toString()}):${msg}`);
 
     window.electron.ipcRenderer.sendMessage('sent-message', {
       receiver,
