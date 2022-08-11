@@ -10,7 +10,7 @@ import RecevieMessage from '../class/RecevieMessage';
 
 const Hello = () => {
   const [connectionNum, setConnectionNum] = useState(0);
-  const [history, setHistory] = useState('');
+  const [history, setHistory] = useState('history messages:\n');
   const [jsObject, setJsObject] = useState({
     msg: 'Hello World',
   });
@@ -66,62 +66,68 @@ const Hello = () => {
   };
 
   return (
-    <div className="flex flex-col	w-screen">
-      <div className="m-auto flex flex-col">
-        <div className="text-white">
-          已连接Socket客户端:
-          <FormGroup>
-            {Object.entries(selectState).map(([key, value]) => {
-              return (
-                <FormControlLabel
-                  key={key}
-                  control={
-                    <Checkbox
-                      value={value}
-                      onClick={() => {
-                        const tempSelectState: Dict<boolean> = selectState;
-                        tempSelectState[key] = !tempSelectState[key];
-                        setSelectState(tempSelectState);
-                      }}
-                    />
-                  }
-                  label={key}
-                />
-              );
-            })}
-          </FormGroup>
-          <div className="w-screen flex">
-            <textarea
-              className="w-9/12 h-96 m-auto text-black"
-              value={history}
-              onChange={() => {}}
-              style={{ resize: 'none' }}
-            />
-          </div>
-          <div className="m-auto flex h-16">
-            Send Message Content:
-            {/* <Editor value={message} onChange={setMessage} /> */}
-            <JSONInput
-              id="a_unique_id"
-              placeholder={jsObject}
-              height="200px"
-              onChange={(e: any) => {
-                setJsObject(e.jsObject);
-              }}
-            />
-            <Button
-              className="m-auto "
-              variant="contained"
-              onClick={() => {
-                sentMessage(JSON.stringify(jsObject));
-              }}
-            >
-              sent message
-            </Button>
+    <div className="grid grid-rows-6 w-screen h-screen">
+      <div className="border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 ">
+        This is a Setting Area
+      </div>
+      <div className="grid grid-cols-6 row-start-2 row-end-6">
+        <div className="border-solid m-1 border-4 rounded-lg border-sky-500 bg-sky-500 text-white">
+          <div>
+            已连接Socket客户端:
+            <FormGroup>
+              {Object.entries(selectState).map(([key, value]) => {
+                return (
+                  <FormControlLabel
+                    key={key}
+                    control={
+                      <Checkbox
+                        value={value}
+                        onClick={() => {
+                          const tempSelectState: Dict<boolean> = selectState;
+                          tempSelectState[key] = !tempSelectState[key];
+                          setSelectState(tempSelectState);
+                        }}
+                      />
+                    }
+                    label={key}
+                  />
+                );
+              })}
+            </FormGroup>
           </div>
         </div>
+
+        <div className="flex border-solid m-1 border-4 rounded-lg border-sky-500 col-start-2 col-end-5 bg-sky-500">
+          <textarea
+            className="w-11/12 h-96  m-auto text-black"
+            value={history}
+            onChange={() => {}}
+            style={{ resize: 'none' }}
+          />
+        </div>
+        <div className="border-solid m-1 border-4 rounded-lg border-sky-500 col-start-5 col-end-7 bg-sky-500">
+          Send Message Content:
+          {/* <Editor value={message} onChange={setMessage} /> */}
+          <JSONInput
+            id="a_unique_id"
+            placeholder={jsObject}
+            height="200px"
+            onChange={(e: any) => {
+              setJsObject(e.jsObject);
+            }}
+          />
+          <Button
+            className="m-auto "
+            variant="contained"
+            onClick={() => {
+              sentMessage(JSON.stringify(jsObject));
+            }}
+          >
+            sent message
+          </Button>
+        </div>
       </div>
-      <div>ConnectionNum:{connectionNum}</div>
+      <div className="">ConnectionNum:{connectionNum}</div>
     </div>
   );
 };
